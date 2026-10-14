@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+<rect width="1200" height="630" fill="#f3f6fb"/>
+<g transform="translate(70 63) scale(.44)"><rect width="128" height="128" rx="28" fill="#4b83d6"/><g fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"><path d="M72 25H39a6 6 0 0 0-6 6v66a6 6 0 0 0 6 6h50a6 6 0 0 0 6-6V48L72 25Z"/><path d="M72 25v23h23M48 66h32M48 82h24"/></g></g>
+<g font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif"><text x="145" y="102" font-size="29" font-weight="600" fill="#202b3b">Cosmic PDF</text>
+<text x="70" y="258" font-size="75" font-weight="600" fill="#202b3b">Less glare.</text><text x="70" y="348" font-size="75" font-weight="600" fill="#386fbf">More clarity.</text>
+<text x="74" y="417" font-size="22" fill="#637083">Dark reading. AI explanations. Local OCR.</text><text x="74" y="546" font-size="18" fill="#386fbf">pdf.songming.org</text></g>
+<rect x="695" y="91" width="424" height="460" rx="18" fill="#252c37" stroke="#66778d"/>
+<path d="M695 137h424" stroke="#4a586a"/><circle cx="720" cy="115" r="4" fill="#8393a8"/><circle cx="735" cy="115" r="4" fill="#8393a8"/><circle cx="750" cy="115" r="4" fill="#8393a8"/>
+<rect x="753" y="166" width="310" height="385" fill="#171b21" stroke="#56606e"/>
+<g fill="#dce4ef" font-family="Georgia,serif"><text x="784" y="241" font-size="31">A little room</text><text x="784" y="278" font-size="31">to think.</text></g>
+<g stroke="#7f91a8" opacity=".6"><path d="M784 315h210m-210 15h210m-210 15h175m-175 24h210m-210 15h200"/></g>
+<rect x="781" y="403" width="191" height="28" rx="2" fill="#385983"/>
+<text x="791" y="423" fill="#e5effc" font-size="17" font-family="Georgia,serif">Working memory</text>
+<rect x="914" y="446" width="171" height="42" rx="7" fill="#e7eff9"/><text x="931" y="473" fill="#243b5b" font-size="16" font-family="-apple-system,Segoe UI,sans-serif">✦ Explain with AI</text>
+</svg>
