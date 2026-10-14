@@ -1,5 +1,10 @@
 # Changelog
 
+## 26.10.14.4 — 2026-10-14
+
+- Make in-page navigation gentler with eased, interruptible scrolling, native history and keyboard focus, and reduced-motion support.
+- Add a FAQ about free use, no ads and no tracking.
+
 ## 26.10.14.3 — 2026-10-14
 
 - Align the two hero introduction columns at the top on desktop and tablet while preserving the mobile stack.

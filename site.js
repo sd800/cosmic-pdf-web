@@ -60,3 +60,73 @@ byId('copy-extensions').addEventListener('click', async event => {
     clearTimeout(copyTimer); copyTimer = setTimeout(() => button.classList.remove('copied'), 2500);
   } catch { announce('Select and copy chrome://extensions from the setup instructions.', '请选中并复制安装说明中的 chrome://extensions。'); }
 });
+
+// A short, eased journey for in-page links. The browser keeps ordinary history,
+// modified clicks and reduced-motion behavior; there is no idle animation loop.
+(() => {
+  const motion = matchMedia('(prefers-reduced-motion: reduce)');
+  let active = null;
+  function cancel() {
+    if (!active) return;
+    cancelAnimationFrame(active.frame);
+    active = null;
+  }
+  function focusTarget(target) {
+    if (target === root) return;
+    if (!target.hasAttribute('tabindex')) {
+      target.setAttribute('tabindex', '-1');
+      target.addEventListener('blur', () => target.removeAttribute('tabindex'), {once:true});
+    }
+    target.focus({preventScroll:true});
+  }
+  function destination(target) {
+    if (target === root) return 0;
+    const padding = parseFloat(getComputedStyle(root).scrollPaddingTop) || 0;
+    const margin = parseFloat(getComputedStyle(target).scrollMarginTop) || 0;
+    return Math.max(0, Math.min(target.getBoundingClientRect().top + scrollY - padding - margin,
+      root.scrollHeight - innerHeight));
+  }
+  document.addEventListener('click', event => {
+    if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    const link = event.target.closest?.('a[href^="#"]');
+    if (!link || link.hasAttribute('download') || (link.target && link.target !== '_self')) return;
+    const href = link.getAttribute('href');
+    let target;
+    try { target = href === '#' ? root : document.getElementById(decodeURIComponent(href.slice(1))); } catch { return; }
+    if (!target) return;
+    event.preventDefault();
+    cancel();
+    const hash = new URL(href, location.href).hash;
+    if (location.hash !== hash) {
+      try { history.pushState(null, '', href); }
+      catch { location.hash = hash; return; }
+    }
+    const from = scrollY, to = destination(target), distance = Math.abs(to - from);
+    if (motion.matches || distance < 2) {
+      scrollTo({top:to, behavior:'instant'});
+      focusTarget(target);
+      return;
+    }
+    const duration = Math.min(1200, Math.max(650, Math.sqrt(distance) * 18));
+    const job = {frame:0, started:performance.now(), target};
+    active = job;
+    function step(now) {
+      if (active !== job) return;
+      const progress = Math.min(1, Math.max(0, (now - job.started) / duration));
+      const eased = progress * progress * (3 - 2 * progress);
+      // Explicit instant placement avoids stacking native CSS smooth scrolls.
+      scrollTo({top:from + (to - from) * eased, behavior:'instant'});
+      if (progress < 1) job.frame = requestAnimationFrame(step);
+      else { active = null; focusTarget(target); }
+    }
+    job.frame = requestAnimationFrame(step);
+  });
+  for (const name of ['wheel', 'touchstart', 'pointerdown']) addEventListener(name, cancel, {passive:true});
+  for (const name of ['keydown', 'popstate', 'hashchange', 'pagehide', 'resize']) addEventListener(name, cancel);
+  document.addEventListener('visibilitychange', () => { if (document.hidden) cancel(); });
+  motion.addEventListener('change', () => {
+    if (!motion.matches || !active) return;
+    const target = active.target;
+    cancel(); scrollTo({top:destination(target), behavior:'instant'}); focusTarget(target);
+  });
+})();
