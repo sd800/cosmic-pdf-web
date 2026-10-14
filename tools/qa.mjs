@@ -4,7 +4,7 @@ import {resolve} from 'node:path';
 import {fileURLToPath,pathToFileURL} from 'node:url';
 if(!process.env.PLAYWRIGHT_MODULE||!process.env.TEST_CHROME)throw Error('Set PLAYWRIGHT_MODULE and TEST_CHROME for the local test browser.');
 const {chromium}=await import(process.env.PLAYWRIGHT_MODULE);
-const root=resolve(fileURLToPath(new URL('..',import.meta.url))),out=resolve(root,'test-dist/1.0.0');
+const root=resolve(fileURLToPath(new URL('..',import.meta.url))),version=(await readFile(resolve(root,'VERSION'),'utf8')).trim(),out=resolve(root,'test-dist/'+version);
 await mkdir(out,{recursive:true});
 const browser=await chromium.launch({executablePath:process.env.TEST_CHROME,headless:true});
 const checks=[],errors=[];
@@ -20,6 +20,7 @@ try{
   const expected=scheme==='dark'?'rgb(19, 23, 30)':'rgb(248, 249, 252)';
   assert.equal(await page.locator('body').evaluate(el=>getComputedStyle(el).backgroundColor),expected);
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,`No horizontal overflow: ${width}/${scheme}`);
+  if(width>650){const tops=await page.locator('.hero-intro > div').evaluateAll(nodes=>nodes.map(node=>node.getBoundingClientRect().top));assert.ok(Math.abs(tops[0]-tops[1])<1,'Hero column starts must align');}
   assert.equal(await page.locator('html [data-lang="zh"]').first().isVisible(),false);
   await page.locator('#explain-preview').click();assert.equal(await page.locator('#explanation-preview').isVisible(),true);
   assert.equal(await page.locator('#explain-preview').getAttribute('aria-expanded'),'true');
@@ -56,6 +57,6 @@ try{
  assert.ok(!html.includes('github.com'));assert.deepEqual(errors,[]);
  const report={passed:true,checks,errors};
  await writeFile(resolve(out,'report.json'),JSON.stringify(report,null,2)+'\n');
- await writeFile(resolve(out,'README.md'),'# Cosmic PDF website 1.0.0 QA\n\nRun tools/qa.mjs with PLAYWRIGHT_MODULE and TEST_CHROME pointing to an isolated test browser. Screenshots cover desktop/mobile, system light/dark and manually selected English/Chinese. Chinese browser locale intentionally starts in English. Tests do not call AI, upload documents, write a real clipboard, or control personal Chrome. The separate sample PDF uses independently authored text; its second page has no text layer.\n');
+ await writeFile(resolve(out,'README.md'),'# Cosmic PDF website '+version+' QA\n\nRun tools/qa.mjs with PLAYWRIGHT_MODULE and TEST_CHROME pointing to an isolated test browser. Screenshots cover desktop/mobile, system light/dark and manually selected English/Chinese. Chinese browser locale intentionally starts in English. Tests do not call AI, upload documents, write a real clipboard, or control personal Chrome. The separate sample PDF uses independently authored text; its second page has no text layer.\n');
  console.log(JSON.stringify(report));
 }finally{await browser.close();}

@@ -70,7 +70,7 @@ h1,h2,h3 { font-weight: 600; }
 .button-small { padding: 11px 16px; font-size: 14px; }
 .button .icon { width: 20px; height: 20px; }
 .hero { padding-top: 72px; }
-.hero-intro { display: grid; grid-template-columns: 1fr 1fr; align-items: end; gap: 72px; margin-bottom: 46px; }
+.hero-intro { display: grid; grid-template-columns: 1fr 1fr; align-items: start; gap: 72px; margin-bottom: 46px; }
 .eyebrow { display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; line-height: 1.5; letter-spacing: .08em; color: var(--accent); }
 .eyebrow .icon { width: 16px; height: 16px; }
 .hero h1 { margin-top: 18px; font-size: clamp(52px,5.8vw,78px); line-height: 1.08; font-weight: 600; }
@@ -255,7 +255,7 @@ html[data-language="zh"] .hero-actions { gap: 16px; }
  .main-nav { display: none; }
  .nav-actions { margin-left: auto; }
  .hero { padding-top: 50px; }
- .hero-intro { align-items: center; grid-template-columns: 1fr 1fr; }
+ .hero-intro { grid-template-columns: 1fr 1fr; }
  .hero h1 { font-size: 57px; }
  .hero-summary > p:first-child { font-size: 15px; }
  .hero-actions { gap: 14px; }

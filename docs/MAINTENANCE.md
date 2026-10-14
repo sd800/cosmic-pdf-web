@@ -1,5 +1,9 @@
 # Maintenance and publishing
 
+## Versioning
+
+Every commit message uses `Release YY.M.D.NUM`, for example `Release 26.10.14.3`. Use the release date in America/Chicago, unpadded month/day numbers and a sequence starting at 1 each day. Increment NUM for each new commit on that date. Keep the current VERSION and CHANGELOG aligned with this calendar format.
+
 ## Files
 
 - `index.html`: complete bilingual content and semantic page structure.
