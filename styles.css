@@ -78,7 +78,7 @@ h1,h2,h3 { font-weight: 600; }
 .brand { display: inline-flex; align-items: center; gap: 11px; flex-shrink: 0; font-size: 20px; font-weight: 600; line-height: 1; }
 .brand img { border-radius: 8px; }
 .main-nav { display: flex; margin-left: auto; align-items: center; gap: 28px; color: var(--muted); font-size: 14px; }
-.main-nav a:hover, .site-footer a:hover, .footer-theme-toggle:hover, .source-link:hover { color: var(--accent); }
+.main-nav a:hover, .site-footer a:hover, .source-link:hover { color: var(--accent); }
 .nav-actions { display: flex; align-items: center; gap: 22px; }
 .language-button { background: transparent; padding: 8px 0; font-size: 14px; white-space: nowrap; }
 .language-button:hover { color: var(--accent); }
@@ -242,7 +242,9 @@ code { font-family: ui-monospace,SFMono-Regular,Consolas,monospace; font-size: .
 .faq-list details p { color: var(--muted); font-size: 13px; line-height: 1.9; margin-top: 16px; }
 .site-footer { padding: 32px 0 40px; border-top: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; gap: 30px; }
 .site-footer .brand { font-size: 16px; gap: 9px; }
-.footer-theme-toggle { padding: 0; background: transparent; white-space: nowrap; }
+.footer-appearance { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+.footer-appearance button { font: inherit; color: inherit; padding: 0; background: transparent; min-inline-size: 3em; text-align: start; }
+.footer-appearance button:hover { color: var(--accent); }
 .site-footer > div { display: flex; align-items: center; gap: 28px; color: var(--muted); font-size: 12px; }
 html[data-language="zh"] .eyebrow { letter-spacing: .03em; }
 html[data-language="zh"] .hero h1 { font-size: clamp(46px,5vw,66px); line-height: 1.22; }

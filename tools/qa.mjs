@@ -10,35 +10,26 @@ const browser=await chromium.launch({executablePath:process.env.TEST_CHROME,head
 const checks=[],errors=[];
 const themeOnly=process.env.SITE_QA==='theme';
 async function checkTheme(page,width,scheme){
- const opposite=scheme==='light'?'dark':'light', colors={light:'rgb(248, 249, 252)',dark:'rgb(19, 23, 30)'};
- const palette=mode=>page.waitForFunction(color=>getComputedStyle(document.body).backgroundColor===color,colors[mode]);
- const button=page.locator('#theme-toggle');
- assert.equal(await page.locator('html').getAttribute('data-language'),'en');
- assert.equal(await button.innerText(),'Auto Light/Dark');await palette(scheme);
- await page.emulateMedia({colorScheme:opposite});await palette(opposite);
- assert.equal(await button.innerText(),'Auto Light/Dark');
- await button.press('Enter');await palette('light');
- assert.equal(await page.locator('html').getAttribute('data-theme'),'light');
+ const palette=mode=>page.waitForFunction(color=>getComputedStyle(document.body).backgroundColor===color,mode==='dark'?'rgb(19, 23, 30)':'rgb(248, 249, 252)');
+ const button=page.locator('#appearance-mode');
+ assert.equal(await page.locator('.site-footer select').count(),0);
+ assert.equal(await button.innerText(),'Auto');await palette(scheme);
+ await page.emulateMedia({colorScheme:scheme==='light'?'dark':'light'});await palette(scheme==='light'?'dark':'light');
+ assert.equal(await button.innerText(),'Auto');
+ await button.press('Enter');await palette('light');assert.equal(await button.innerText(),'Light');
  await page.emulateMedia({colorScheme:'dark'});await palette('light');
- await page.locator('[data-language-toggle]').click();assert.equal(await button.innerText(),'浅色模式');
- await page.reload();await palette('light');
- assert.equal(await page.locator('html').getAttribute('data-theme'),'light');
- assert.equal(await page.locator('html').getAttribute('lang'),'zh-Hans');
- await button.press('Space');await palette('dark');assert.equal(await button.innerText(),'深色模式');
+ await page.locator('[data-language-toggle]').click();assert.equal(await button.innerText(),'浅色');
+ await page.reload();await palette('light');assert.equal(await button.innerText(),'浅色');
+ await button.press('Space');await palette('dark');assert.equal(await button.innerText(),'深色');
  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);
- const position=await button.evaluate(node=>{const link=node.nextElementSibling;return{before:link.getAttribute('href')==='#privacy',button:node.getBoundingClientRect().toJSON(),privacy:link.getBoundingClientRect().toJSON()};});
- assert.equal(position.before,true);assert.ok(position.button.right<=position.privacy.left);
- if(width>650)assert.ok(Math.abs(position.button.top-position.privacy.top)<1);
- await button.scrollIntoViewIfNeeded();await page.locator('.site-footer').screenshot({path:resolve(out,`${width}-${scheme}-footer.png`)});
- await button.click();await palette('dark');assert.equal(await button.innerText(),'自动深浅色');
- assert.equal(await page.locator('html').getAttribute('data-theme'),null);
- assert.equal(await page.evaluate(()=>localStorage.getItem('cosmic-pdf-web-theme')),null);
- await page.emulateMedia({colorScheme:'light'});await palette('light');
- await page.reload();assert.equal(await button.innerText(),'自动深浅色');await palette('light');
- await page.evaluate(()=>localStorage.setItem('cosmic-pdf-web-theme','invalid'));await page.reload();
- assert.equal(await page.locator('html').getAttribute('data-theme'),null);await palette('light');
+ const position=await button.evaluate(node=>{const group=node.closest('.footer-appearance'),link=group.nextElementSibling;return{before:link.getAttribute('href')==='#privacy',right:group.getBoundingClientRect().right,left:link.getBoundingClientRect().left};});
+ assert.equal(position.before,true);assert.ok(position.right<=position.left);
+ await button.scrollIntoViewIfNeeded();await page.locator('.site-footer').screenshot({path:resolve(out,width+'-'+scheme+'-footer.png')});
+ await button.click();await palette('dark');assert.equal(await button.innerText(),'自动');assert.equal(await page.evaluate(()=>localStorage.getItem('cosmic-pdf-web-theme')),null);
+ await page.emulateMedia({colorScheme:'light'});await palette('light');await page.reload();assert.equal(await button.innerText(),'自动');
+ await page.evaluate(()=>localStorage.setItem('cosmic-pdf-web-theme','invalid'));await page.reload();await palette('light');assert.equal(await button.innerText(),'自动');
  assert.equal(await page.locator('#dark-title [data-lang="en"]').textContent(),'Dark pages.A quieter kindof reading.');
- checks.push(`${width}px ${scheme}: auto/live device appearance, three-state cycle, native Enter/Space, localized labels, reload persistence, return to auto, invalid-choice fallback, footer position and original headline`);
+ checks.push(width+'px '+scheme+': Appearance text button with no select, three-state mouse/keyboard cycle, system changes, manual overrides, Chinese, reload persistence, Auto reset, invalid-choice fallback, footer layout and unchanged headline');
 }
 
 try{
@@ -91,7 +82,7 @@ try{
   const context=await browser.newContext({colorScheme:'light'});
   await context.addInitScript(()=>{for(const key of ['getItem','setItem','removeItem'])Object.defineProperty(Storage.prototype,key,{value(){throw new DOMException('Blocked','SecurityError');}});});
   const page=await context.newPage();page.on('pageerror',e=>errors.push(e.message));
-  await page.goto(pathToFileURL(root+'/index.html').href);await page.locator('#theme-toggle').click();await page.locator('#theme-toggle').click();
+  await page.goto(pathToFileURL(root+'/index.html').href);await page.locator('#appearance-mode').click();await page.locator('#appearance-mode').click();
   assert.equal(await page.locator('html').getAttribute('data-theme'),'dark');
   assert.equal(await page.locator('body').evaluate(el=>getComputedStyle(el).backgroundColor),'rgb(19, 23, 30)');
   await context.close();checks.push('Blocked storage still permits current-page appearance switching');
@@ -101,6 +92,6 @@ try{
  assert.ok(!html.includes('github.com'));assert.deepEqual(errors,[]);
  const report={passed:true,checks,errors};
  await writeFile(resolve(out,'report.json'),JSON.stringify(report,null,2)+'\n');
- await writeFile(resolve(out,'README.md'),themeOnly?'# Footer appearance QA '+version+'\n\nRun SITE_QA=theme with tools/qa.mjs and the existing isolated-browser environment. Covers desktop/mobile, both device schemes, live system changes, manual overrides, native keyboard activation, Chinese labels, reload persistence, invalid stored choices, blocked storage, original headline and footer layout. Screenshots show only the footer. No personal Chrome, remote requests or document/API operations.\n':'# Cosmic PDF website '+version+' QA\n\nRun tools/qa.mjs with PLAYWRIGHT_MODULE and TEST_CHROME pointing to an isolated test browser. Screenshots cover desktop/mobile, system light/dark and manually selected English/Chinese. Chinese browser locale intentionally starts in English. Tests do not call AI, upload documents, write a real clipboard, or control personal Chrome. The separate sample PDF uses independently authored text; its second page has no text layer.\n');
+ await writeFile(resolve(out,'README.md'),themeOnly?'# Footer appearance QA '+version+'\n\nRun SITE_QA=theme with tools/qa.mjs and the existing isolated-browser environment. Covers desktop/mobile, both device schemes, live system changes, manual overrides, native Enter/Space operation, Chinese labels, reload persistence, invalid stored choices, blocked storage, original headline and footer layout. Screenshots show only the footer. No personal Chrome, remote requests or document/API operations.\n':'# Cosmic PDF website '+version+' QA\n\nRun tools/qa.mjs with PLAYWRIGHT_MODULE and TEST_CHROME pointing to an isolated test browser. Screenshots cover desktop/mobile, system light/dark and manually selected English/Chinese. Chinese browser locale intentionally starts in English. Tests do not call AI, upload documents, write a real clipboard, or control personal Chrome. The separate sample PDF uses independently authored text; its second page has no text layer.\n');
  console.log(JSON.stringify(report));
 }finally{await browser.close();}

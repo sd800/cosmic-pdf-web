@@ -1,5 +1,9 @@
 # Changelog
 
+## 26.10.17.2 — 2026-10-17
+
+- Present footer appearance as Appearance - followed by clickable Auto/Light/Dark text.
+
 ## 26.10.17.1 — 2026-10-17
 
 - Add a remembered Auto Light/Dark, Light mode and Dark mode switch beside Privacy, with English and Simplified Chinese labels.
