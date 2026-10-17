@@ -1,5 +1,5 @@
 :root {
-  color-scheme: light dark;
+  color-scheme: light;
   --bg: #f8f9fc;
   --surface: #ffffff;
   --ink: #202b3b;
@@ -19,7 +19,8 @@
   -webkit-font-smoothing: antialiased;
 }
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
     --bg: #13171e;
     --surface: #1b222c;
     --ink: #ecebe9;
@@ -34,6 +35,22 @@
     --button-ink: #17273f;
     --shadow: 0 30px 90px -35px rgba(0,0,0,.65), 0 0 0 1px #303b49;
   }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #13171e;
+  --surface: #1b222c;
+  --ink: #ecebe9;
+  --muted: #adb8c8;
+  --line: #303b49;
+  --accent: #9fc3f7;
+  --accent-hover: #bdd7fd;
+  --soft-blue: #202e43;
+  --section-bg: #191f29;
+  --header: rgba(19,23,30,.94);
+  --reader-bg: #20252e;
+  --button-ink: #17273f;
+  --shadow: 0 30px 90px -35px rgba(0,0,0,.65), 0 0 0 1px #303b49;
 }
 * { box-sizing: border-box; }
 html { scroll-padding-top: 104px; }
@@ -61,7 +78,7 @@ h1,h2,h3 { font-weight: 600; }
 .brand { display: inline-flex; align-items: center; gap: 11px; flex-shrink: 0; font-size: 20px; font-weight: 600; line-height: 1; }
 .brand img { border-radius: 8px; }
 .main-nav { display: flex; margin-left: auto; align-items: center; gap: 28px; color: var(--muted); font-size: 14px; }
-.main-nav a:hover, .site-footer a:hover, .source-link:hover { color: var(--accent); }
+.main-nav a:hover, .site-footer a:hover, .footer-theme-toggle:hover, .source-link:hover { color: var(--accent); }
 .nav-actions { display: flex; align-items: center; gap: 22px; }
 .language-button { background: transparent; padding: 8px 0; font-size: 14px; white-space: nowrap; }
 .language-button:hover { color: var(--accent); }
@@ -225,6 +242,7 @@ code { font-family: ui-monospace,SFMono-Regular,Consolas,monospace; font-size: .
 .faq-list details p { color: var(--muted); font-size: 13px; line-height: 1.9; margin-top: 16px; }
 .site-footer { padding: 32px 0 40px; border-top: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; gap: 30px; }
 .site-footer .brand { font-size: 16px; gap: 9px; }
+.footer-theme-toggle { padding: 0; background: transparent; white-space: nowrap; }
 .site-footer > div { display: flex; align-items: center; gap: 28px; color: var(--muted); font-size: 12px; }
 html[data-language="zh"] .eyebrow { letter-spacing: .03em; }
 html[data-language="zh"] .hero h1 { font-size: clamp(46px,5vw,66px); line-height: 1.22; }

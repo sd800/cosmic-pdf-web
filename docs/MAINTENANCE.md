@@ -7,9 +7,9 @@ Every commit message uses `Release YY.M.D.NUM`, for example `Release 26.10.14.3`
 ## Files
 
 - `index.html`: complete bilingual content and semantic page structure.
-- `styles.css`: layouts, system light/dark palettes and reduced-motion support.
-- `boot.js`: restore only the visitor’s explicitly chosen language before first paint. Do not inspect browser/device language.
-- `site.js`: manual language changes, clearly labeled example explanation, installation-address copying and gentle anchor navigation. No AI calls or analytics.
+- `styles.css`: layouts, automatic/manual light/dark palettes and reduced-motion support.
+- `boot.js`: restore the visitor’s explicitly chosen language and appearance before the stylesheet loads. Do not inspect browser/device language.
+- `site.js`: manual language and appearance changes, clearly labeled example explanation, installation-address copying and gentle anchor navigation. No AI calls or analytics.
 - `assets/logo.svg`: the extension’s existing logo; keep it in sync when branding changes.
 - `assets/reading-notes.pdf`: independently authored demonstration, with a native text page and a raster-only page. Do not substitute private course/customer documents.
 - `tools/create-sample.py`: optional maintainer-only PDF regeneration; it is not needed to open or publish the site.
@@ -37,3 +37,7 @@ Reusable screenshots/reports may go in ignored `test-dist/` with a short README.
 ## Anchor navigation
 
 Plain same-page clicks use one requestAnimationFrame sequence, 650–1200 ms depending on distance, with smoothstep easing. Each frame uses instant placement so CSS smooth scrolling never stacks. Wheel/touch/pointer/key input, a new navigation, resize, history changes or hiding the page cancel obsolete work. Reduced-motion users get immediate placement. Targets retain existing sticky-header offsets; URL history and keyboard focus are preserved, and modifier/new-tab clicks stay native. No idle loop or scrolling dependency is added.
+
+## Appearance
+
+Without a saved choice, follow device light/dark changes. The footer text button sits before Privacy and shows the current mode, localized with the interface, cycling through Auto Light/Dark → Light mode → Dark mode. Returning to Auto clears the saved override. Save only an explicit light/dark choice in `cosmic-pdf-web-theme`; restore it in boot.js before loading styles to avoid painting the opposite palette on reload. A blocked storage API must not prevent switching for the current page. Keep browser theme colors in sync. The fixed light/dark product comparison remains unchanged.

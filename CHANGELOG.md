@@ -1,5 +1,9 @@
 # Changelog
 
+## 26.10.17.1 — 2026-10-17
+
+- Add a remembered Auto Light/Dark, Light mode and Dark mode switch beside Privacy, with English and Simplified Chinese labels.
+
 ## 26.10.14.4 — 2026-10-14
 
 - Make in-page navigation gentler with eased, interruptible scrolling, native history and keyboard focus, and reduced-motion support.

@@ -1,7 +1,37 @@
 const root = document.documentElement;
 const byId = id => document.getElementById(id);
 const isChinese = () => root.dataset.language === 'zh';
+const systemTheme = matchMedia('(prefers-color-scheme: dark)');
+const isDark = () => root.dataset.theme ? root.dataset.theme === 'dark' : systemTheme.matches;
 const announce = (en, zh) => { byId('announcement').textContent = isChinese() ? zh : en; };
+function updateTheme() {
+  const dark = isDark(), button = byId('theme-toggle');
+  const mode = root.dataset.theme || 'auto';
+  const names = {auto:['Auto Light/Dark','自动深浅色'],light:['Light mode','浅色模式'],dark:['Dark mode','深色模式']};
+  const next = {auto:'light',light:'dark',dark:'auto'}[mode];
+  button.querySelector('[data-lang="en"]').textContent = names[mode][0];
+  button.querySelector('[data-lang="zh"]').textContent = names[mode][1];
+  button.title = isChinese() ? '切换为' + names[next][1] : 'Switch to ' + names[next][0];
+  document.querySelectorAll('meta[name="theme-color"]').forEach(meta => { meta.content = dark ? '#13171e' : '#f8f9fc'; });
+  document.querySelector('meta[name="color-scheme"]').content = root.dataset.theme || 'light dark';
+}
+byId('theme-toggle').addEventListener('click', () => {
+  const next = {auto:'light',light:'dark',dark:'auto'}[root.dataset.theme || 'auto'];
+  if (next === 'auto') delete root.dataset.theme;
+  else root.dataset.theme = next;
+  try {
+    if (next === 'auto') localStorage.removeItem('cosmic-pdf-web-theme');
+    else localStorage.setItem('cosmic-pdf-web-theme', next);
+  } catch {}
+  updateTheme();
+});
+systemTheme.addEventListener('change', () => { if (!root.dataset.theme) updateTheme(); });
+addEventListener('storage', event => {
+  if (event.key !== null && event.key !== 'cosmic-pdf-web-theme') return;
+  if (event.newValue === 'light' || event.newValue === 'dark') root.dataset.theme = event.newValue;
+  else delete root.dataset.theme;
+  updateTheme();
+});
 function updateLanguage() {
   const zh = isChinese();
   root.lang = zh ? 'zh-Hans' : 'en';
@@ -13,6 +43,7 @@ function updateLanguage() {
   byId('close-explanation').setAttribute('aria-label', zh ? '关闭解释示例' : 'Close example explanation');
   document.querySelector('.main-nav').setAttribute('aria-label', zh ? '主导航' : 'Main navigation');
   document.querySelector('.reader-window').setAttribute('aria-label', zh ? '产品交互示意' : 'Interactive product illustration');
+  updateTheme();
 }
 document.querySelectorAll('[data-language-toggle]').forEach(button => button.addEventListener('click', () => {
   root.dataset.language = isChinese() ? 'en' : 'zh';

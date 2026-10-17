@@ -6,6 +6,6 @@ The product website for Cosmic PDF: a calmer PDF reader for Chrome, with dark re
 
 Open `index.html` directly to view the website. It is plain HTML, CSS and JavaScript, with no build step, external fonts, analytics or GitHub Actions.
 
-English is the initial language. Visitors can choose Simplified Chinese, and the website remembers only that choice. Appearance follows the device automatically.
+English is the initial language. Visitors can choose Simplified Chinese. Appearance follows the device until changed with the footer’s Auto Light/Dark, Light mode and Dark mode button. The website remembers these choices locally.
 
 See [maintenance and publishing](docs/MAINTENANCE.md) for local checks, download packages and GitHub Pages setup.
