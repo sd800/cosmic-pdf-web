@@ -1,5 +1,9 @@
 # Changelog
 
+## 26.10.17.3 — 2026-10-17
+
+- Add a GitHub Repo link before Appearance in the footer.
+
 ## 26.10.17.2 — 2026-10-17
 
 - Present footer appearance as Appearance - followed by clickable Auto/Light/Dark text.

@@ -89,7 +89,7 @@ try{
  }
  const html=await readFile(root+'/index.html','utf8');
  assert.equal((html.match(/<h1\b/g)||[]).length,1);assert.ok(!/navigator\.language/.test(await readFile(root+'/site.js','utf8')));
- assert.ok(!html.includes('github.com'));assert.deepEqual(errors,[]);
+ assert.ok(html.includes('<a href="https://github.com/sd800/cosmic-pdf">GitHub Repo</a><div class="footer-appearance">'));assert.deepEqual(errors,[]);
  const report={passed:true,checks,errors};
  await writeFile(resolve(out,'report.json'),JSON.stringify(report,null,2)+'\n');
  await writeFile(resolve(out,'README.md'),themeOnly?'# Footer appearance QA '+version+'\n\nRun SITE_QA=theme with tools/qa.mjs and the existing isolated-browser environment. Covers desktop/mobile, both device schemes, live system changes, manual overrides, native Enter/Space operation, Chinese labels, reload persistence, invalid stored choices, blocked storage, original headline and footer layout. Screenshots show only the footer. No personal Chrome, remote requests or document/API operations.\n':'# Cosmic PDF website '+version+' QA\n\nRun tools/qa.mjs with PLAYWRIGHT_MODULE and TEST_CHROME pointing to an isolated test browser. Screenshots cover desktop/mobile, system light/dark and manually selected English/Chinese. Chinese browser locale intentionally starts in English. Tests do not call AI, upload documents, write a real clipboard, or control personal Chrome. The separate sample PDF uses independently authored text; its second page has no text layer.\n');
