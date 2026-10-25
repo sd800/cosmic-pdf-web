@@ -1,5 +1,9 @@
 # Changelog
 
+## 26.10.25.3 — 2026-10-25
+
+- Refine website header link styling.
+
 ## 26.10.25.2 — 2026-10-25
 
 - Add a GitHub repository link to the website header.

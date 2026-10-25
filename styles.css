@@ -80,10 +80,9 @@ h1,h2,h3 { font-weight: 600; }
 .main-nav { display: flex; margin-left: auto; align-items: center; gap: 28px; color: var(--muted); font-size: 14px; }
 .main-nav a:hover, .site-footer a:hover, .source-link:hover { color: var(--accent); }
 .nav-actions { display: flex; align-items: center; gap: 22px; }
-.github-link { display: inline-flex; align-items: center; gap: 7px; font-size: 14px; color: var(--muted); white-space: nowrap; }
+.github-link { display: inline-block; padding: 8px 0; font-size: 14px; line-height: inherit; color: var(--muted); white-space: nowrap; }
 .compact-download-icon { display: none; }
 .github-link:hover { color: var(--accent); }
-.github-link svg { width: 18px; height: 18px; flex: none; fill: currentColor; stroke: none; }
 .language-button { background: transparent; padding: 8px 0; font-size: 14px; white-space: nowrap; }
 .language-button:hover { color: var(--accent); }
 .button { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 14px 24px; border-radius: 9px; background: var(--accent); color: var(--button-ink); font-size: 15px; font-weight: 600; line-height: 1.4; white-space: nowrap; }
@@ -261,6 +260,7 @@ html[data-language="zh"] .hero-actions { gap: 16px; }
 @media (max-width: 1120px) {
  .nav-wrap { gap: 25px; }
  .main-nav { gap: 20px; font-size: 13px; }
+ .github-link { font-size: 13px; }
  .nav-actions { gap: 18px; }
  .hero-intro { gap: 36px; }
  .hero-summary > p:first-child { font-size: 16px; }
@@ -314,14 +314,14 @@ html[data-language="zh"] .hero-actions { gap: 16px; }
 }
 @media (max-width: 650px) {
  .github-link { padding-block: 8px; }
- .github-link>span { display: none; }
+
  html { scroll-padding-top: 88px; }
  .section-wrap { width: calc(100% - 40px); }
  .nav-wrap { width: calc(100% - 32px); min-height: 66px; gap: 12px; }
  .brand { font-size: 17px; gap: 8px; }
  .nav-wrap .brand img { width: 29px; height: 29px; border-radius: 7px; }
  .nav-actions { gap: 14px; }
- .language-button { font-size: 12px; }
+ .github-link, .language-button { font-size: 12px; }
  .button-small { padding: 9px 11px; font-size: 12px; }
  .hero { padding-top: 41px; }
  .hero-intro { display: block; margin-bottom: 32px; }
@@ -429,14 +429,16 @@ html[data-language="zh"] .hero-actions { gap: 16px; }
  html[data-language="zh"] .feature-copy h2,html[data-language="zh"] .section-heading h2 { font-size: 34px; }
  html[data-language="zh"] .feature-copy h2 br { display: initial; }
 }
-@media (max-width: 380px) {
+@media (max-width: 430px) {
  .site-header .button-small { position: relative; }
  .site-header .button-small [data-lang] { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
  .compact-download-icon { display: block; width: 18px; height: 18px; }
+}
+@media (max-width: 380px) {
  .brand { font-size: 16px; gap: 6px; }
  .nav-actions { gap: 11px; }
  .button-small { padding-inline: 9px; font-size: 11px; }
- .language-button { font-size: 11px; }
+ .github-link, .language-button { font-size: 11px; }
  .section-wrap { width: calc(100% - 32px); }
  .reader-stage { padding-inline: 7px; }
  .hero-actions { gap: 14px; }

@@ -44,3 +44,5 @@ Plain same-page clicks use one requestAnimationFrame sequence, 650–1200 ms dep
 Without a saved choice, follow device light/dark changes. The footer shows Appearance - followed by a text button before Privacy. It displays the current mode and cycles Auto → Light → Dark, localized with the interface. Auto clears the saved override. Save only an explicit light/dark choice in `cosmic-pdf-web-theme`; restore it in boot.js before loading styles to avoid painting the opposite palette on reload. A blocked storage API must not prevent switching for the current page. Keep browser theme colors in sync. The fixed light/dark product comparison remains unchanged.
 
 For entry routing changes, test /index, /index.html, and /index/ over HTTP, with query/fragment retention and unchanged file:// opening. Keep the alias directory published alongside the root files.
+
+Header GitHub links use text only, with typography matching nearby navigation at each breakpoint. Keep the label visible on narrow screens rather than substituting a GitHub icon.
