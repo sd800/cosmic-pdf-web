@@ -1,5 +1,9 @@
 # Changelog
 
+## 26.10.25.1 — 2026-10-25
+
+- Normalize homepage index addresses while preserving local HTML opening and navigation parameters.
+
 ## 26.10.17.3 — 2026-10-17
 
 - Add a GitHub Repo link before Appearance in the footer.

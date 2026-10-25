@@ -8,6 +8,7 @@ Every commit message uses `Release YY.M.D.NUM`, for example `Release 26.10.14.3`
 
 - `index.html`: complete bilingual content and semantic page structure.
 - `styles.css`: layouts, automatic/manual light/dark palettes and reduced-motion support.
+- `redirect.js` and `index/index.html`: normalize HTTP/HTTPS homepage aliases to the root before rendering, retaining query parameters and fragments. File URLs keep normal local opening.
 - `boot.js`: restore the visitor’s explicitly chosen language and appearance before the stylesheet loads. Do not inspect browser/device language.
 - `site.js`: manual language and appearance changes, clearly labeled example explanation, installation-address copying and gentle anchor navigation. No AI calls or analytics.
 - `assets/logo.svg`: the extension’s existing logo; keep it in sync when branding changes.
@@ -41,3 +42,5 @@ Plain same-page clicks use one requestAnimationFrame sequence, 650–1200 ms dep
 ## Appearance
 
 Without a saved choice, follow device light/dark changes. The footer shows Appearance - followed by a text button before Privacy. It displays the current mode and cycles Auto → Light → Dark, localized with the interface. Auto clears the saved override. Save only an explicit light/dark choice in `cosmic-pdf-web-theme`; restore it in boot.js before loading styles to avoid painting the opposite palette on reload. A blocked storage API must not prevent switching for the current page. Keep browser theme colors in sync. The fixed light/dark product comparison remains unchanged.
+
+For entry routing changes, test /index, /index.html, and /index/ over HTTP, with query/fragment retention and unchanged file:// opening. Keep the alias directory published alongside the root files.
