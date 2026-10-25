@@ -74,7 +74,7 @@ h1,h2,h3 { font-weight: 600; }
 .skip-link { position: fixed; left: 20px; top: -100px; padding: 12px 20px; background: var(--surface); z-index: 100; border: 1px solid var(--line); border-radius: 8px; }
 .skip-link:focus { top: 12px; }
 .site-header { position: sticky; top: 0; z-index: 20; border-bottom: 1px solid var(--line); background: var(--header); backdrop-filter: blur(14px); }
-.nav-wrap { width: min(1280px, calc(100% - 64px)); min-height: 80px; margin-inline: auto; display: flex; align-items: center; gap: 36px; }
+.nav-wrap { width: min(1280px, calc(100% - 64px)); min-height: 80px; margin-inline: auto; display: flex; align-items: center; gap: 28px; }
 .brand { display: inline-flex; align-items: center; gap: 11px; flex-shrink: 0; font-size: 20px; font-weight: 600; line-height: 1; }
 .brand img { border-radius: 8px; }
 .main-nav { display: flex; margin-left: auto; align-items: center; gap: 28px; color: var(--muted); font-size: 14px; }
@@ -258,7 +258,7 @@ html[data-language="zh"] .paper p:not(.paper-kicker) { line-height: 1.9; }
 html[data-language="zh"] .feature-copy h2,html[data-language="zh"] .section-heading h2 { font-size: clamp(32px,3.4vw,43px); }
 html[data-language="zh"] .hero-actions { gap: 16px; }
 @media (max-width: 1120px) {
- .nav-wrap { gap: 25px; }
+ .nav-wrap { gap: 20px; }
  .main-nav { gap: 20px; font-size: 13px; }
  .github-link { font-size: 13px; }
  .nav-actions { gap: 18px; }

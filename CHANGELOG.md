@@ -1,5 +1,9 @@
 # Changelog
 
+## 26.10.25.4 — 2026-10-25
+
+- Align header navigation spacing.
+
 ## 26.10.25.3 — 2026-10-25
 
 - Refine website header link styling.
