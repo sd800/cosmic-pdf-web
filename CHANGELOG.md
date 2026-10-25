@@ -1,5 +1,9 @@
 # Changelog
 
+## 26.10.25.2 — 2026-10-25
+
+- Add a GitHub repository link to the website header.
+
 ## 26.10.25.1 — 2026-10-25
 
 - Normalize homepage index addresses while preserving local HTML opening and navigation parameters.
