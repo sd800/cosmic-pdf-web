@@ -11,3 +11,7 @@ English is the initial language. Visitors can choose Simplified Chinese. Appeara
 See [maintenance and publishing](docs/MAINTENANCE.md) for local checks, download packages and GitHub Pages setup.
 
 Homepage aliases `/index.html`, `/index`, and `/index/` redirect to the root over HTTP/HTTPS, retaining query parameters and fragments. The `index/` directory supplies the static extensionless entry, while `redirect.js` normalizes it before rendering. Local `file://` opening is unchanged.
+
+## License
+
+This website is available under the [MIT License](LICENSE).

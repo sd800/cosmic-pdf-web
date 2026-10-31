@@ -1,5 +1,9 @@
 # Changelog
 
+## 26.10.31.2 — 2026-10-31
+
+- License the website under MIT.
+
 ## 26.10.31.1 — 2026-10-31
 
 - Update Chrome compatibility information.
