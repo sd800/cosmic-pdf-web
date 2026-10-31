@@ -1,5 +1,9 @@
 # Changelog
 
+## 26.10.31.1 — 2026-10-31
+
+- Update Chrome compatibility information.
+
 ## 26.10.25.4 — 2026-10-25
 
 - Align header navigation spacing.
